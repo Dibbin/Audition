@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
+<html>
+<head>
 <style>
 
     body {
@@ -84,13 +86,20 @@
 
 </style>
 
+</head>
+<body>
+
+
 <div id="tooltip-container"></div>
 
 <div id="canvas-svg"></div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/topojson/1.1.0/topojson.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script type="text/javascript" src="cordova.js"></script>
+<script type="text/javascript" src="js/index.js"></script>
+
+<script src="js/lib/d3.min.js"></script>
+<script src="js/lib/topojson.min.js"></script>
+<script src="js/lib/jquery.min.js"></script>
 
 <script>
 
@@ -181,7 +190,7 @@
                 .attr("width", width)
                 .attr("height", height);
 
-        d3.tsv("https://s3-us-west-2.amazonaws.com/vida-public/geo/us-state-names.tsv", function(error, names) {
+        d3.tsv("us-state-names.tsv", function(error, names) {
 
             name_id_map = {};
             id_name_map = {};
@@ -397,7 +406,7 @@
                         .attr("d", path);
             }
 
-            d3.json("https://s3-us-west-2.amazonaws.com/vida-public/geo/us.json", function(error, us) {
+            d3.json("us.json", function(error, us) {
                 makeMap(us);
                 makeBars(data);
             });
@@ -406,3 +415,5 @@
     });
 
 </script>
+</body>
+</html>
