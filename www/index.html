@@ -2,13 +2,36 @@
 <meta charset="utf-8">
 <html>
 <head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+    <link href="css/community.css" rel="stylesheet">
+
+    <link href="css/header2.css" rel="stylesheet">
+    <title>Brews by State</title>
 <style>
 
     body {
         font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        background-color: white;
+    }
+
+    #canvas-svg {
         width: 960px;
         height: 500px;
         position: relative;
+    }
+
+    #categoryContainer {
+        margin: 20px;
+        float: right;
+    }
+
+    select {
+        color: black;
     }
 
     /* stylesheet for your custom graph */
@@ -88,22 +111,46 @@
 
 </head>
 <body>
+<nav id="myNavbar" class="navbar navbar-default" role="navigation">
 
-<select id="category">
-    <option value="total">Active Brews</option>
-    <option value="abv">Average ABV</option>
-</select>
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand reg-pad" ><img id="logo" class="logo" src="//www.thebeerbug.com/images/logo_header.png"></a>
+        </div><!-- end navbar-header -->
+
+    </div><!-- end container-fluid -->
+</nav>
+
+<div class="blue">
+    <div class="container">
+        <div class="col-md-6 hidden-xs hidden-sm">
+            <label class="title"><h2 class="catTitle">Active Brews by State</h2></label>
+        </div>
+        <div class="col-xs-12 hidden-md hidden-lg">
+            <center>
+                <h2 class="catTitle">Active Brews by State</h2>
+            </center>
+        </div>
+        <div id = "categoryContainer">
+            <label for="category">Category</label>
+            <select id="category">
+                <option value="total">Active Brews</option>
+                <option value="abv">Average ABV</option>
+            </select>
+        </div>
+    </div>
+</div>
 
 <div id="tooltip-container"></div>
 
 <div id="canvas-svg"></div>
 
 <script type="text/javascript" src="cordova.js"></script>
-<script type="text/javascript" src="js/index.js"></script>
 
 <script src="js/lib/d3.min.js"></script>
 <script src="js/lib/topojson.min.js"></script>
 <script src="js/lib/jquery.min.js"></script>
+<script type="text/javascript" src="/js/lib/bootstrap.min.js"></script>
 
 <script>
 
@@ -204,6 +251,11 @@
     }
 
     function draw(data, us, names){
+        var newZoom = window.innerWidth / 774; //scale document to size;
+        if(newZoom > 1) {
+            newZoom = 1
+        }
+        document.body.style.zoom = newZoom; //scale document to size
         name_id_map = {};
         id_name_map = {};
 
@@ -445,6 +497,15 @@
                     category = $(this).val();
                     $("#canvas-svg svg").remove();
                     draw(data, us, names);
+                    switch(category){
+                        case "total":
+                            $(".catTitle").html("Active Brews by State");
+                            break;
+                        case "abv":
+                            $(".catTitle").html("Average ABV by State");
+                            break;
+                    }
+
                 });
             });
         })
